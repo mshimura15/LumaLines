@@ -20,7 +20,7 @@ Point t10 = {6,3,5};
 Point t11 = {7,2,6}; //dark blue
 Point t12 = {5,7,6};
 Point t13 = {2,1,7}; //Purple
-Point t14 = {7,0,7};
+Point t14 = {7,1,7};
 Point t15 = {1,6,8};//pink
 Point t16 = {4,4,8};
 
@@ -62,48 +62,51 @@ void setup()
   DisplaySlate();
 
  
-  CursorPhase=0;
-  LastTime = millis();
+  CursorPhase=0;  //cursor is dark
+  LastTime = millis();  // setup of timing of blinking
  
 }
 
 void loop()
 
   {
- byte CursorColor;
+ byte CursorColor;  //color of the cursor
  
  CheckButtonsPress();
  
  if (Button_A)     
     {    
-      pencilColor++;     
-      if (pencilColor > (8 + 1))
-      CursorColor = Dark;  
-      Tone_Start(ToneE3, 50);
-    }
+    pencilColor++;      //increasing pencil color to +1 whatever it is now
+    if (pencilColor > (8 + 1))  //if pencil is > (8+1) have pencil go dark
+      pencilColor = Dark;       
+      
+   Tone_Start(ToneD3, 50);     
+  }
     
    if (Button_B)   
-  {
+   {    
+    if (pencilColor <= 8)     //if pencil color less than or equal to 8 
 
-    if (pencilColor <= 8)     
-
-      if (PxColor != pencilColor) 
+      if(PxColor != pencilColor)  //if PxColor doesn't equal pencil color
       {
-        PxColor = pencilColor;  
+        PxColor = pencilColor;   //have Px color = the pencil color
       }
       else
       {
-        PxColor = Dark;  
-      } 
-      Tone_Start(ToneE3, 50);
+       PxColor = Dark;   //otherwise have the pixel go dark
+      }      
+
+  Tone_Start(ToneC3, 50);
+
+
   }
      
      if(Button_Up)
      {
        {
-       DrawPx(xcursor,ycursor,PxColor);  
-    ycursor=ycursor+1;
-    if(ycursor==8)
+       DrawPx(xcursor,ycursor,PxColor);  //Drawing the cursor
+    ycursor=ycursor+1;  //increasing y value by 1 from curret position
+    if(ycursor==8) //looping
     ycursor=0;
     
     Tone_Start(ToneE3, 50);
@@ -138,6 +141,7 @@ void loop()
       
     if(Button_Left)
     {
+    {
      DrawPx(xcursor,ycursor,PxColor);
      
     if(xcursor==0)
@@ -147,10 +151,17 @@ void loop()
       
      Tone_Start(ToneE3, 50);
      PxColor = ReadPx(xcursor,ycursor); 
-    }
+     }
+       for(int i=0;i<17;i++)
+      {
+        if(xcursor==tarray[i].xc && ycursor==tarray[i].yc)
+        xcursor--;
+      }
+     }
   
   if(Button_Right)
   {
+    {
     DrawPx(xcursor,ycursor,PxColor);
     
     xcursor=xcursor+1;
@@ -159,8 +170,13 @@ void loop()
     
   Tone_Start(ToneE3, 50);
   PxColor = ReadPx(xcursor,ycursor);
+    }
+  for(int i=0;i<17;i++)
+      {
+        if(xcursor==tarray[i].xc && ycursor==tarray[i].yc)
+        ycursor++;
+      }
   }
- 
  
  
   if (PxColor == pencilColor)
@@ -189,7 +205,79 @@ void loop()
     LastTime = millis();
   }
  
+ boolean Winner = false;
+     {
+   if( ReadPx(0,0)==3)
+   if( ReadPx(0,1)==3)
+   if( ReadPx(0,2)==3)
+   if( ReadPx(0,3)==3)
+   if( ReadPx(0,4)==3)
+   if( ReadPx(0,5)==7)
+   if( ReadPx(0,6)==7)
+   if( ReadPx(0,7)==7)
+   if( ReadPx(1,0)==3)
+   if( ReadPx(1,1)==1)
+   if( ReadPx(1,2)==7)
+   if( ReadPx(1,3)==7)
+   if( ReadPx(1,4)==7)
+   if( ReadPx(1,5)==7)
+   if( ReadPx(1,6)==1)
+   if( ReadPx(1,7)==7)
+   if( ReadPx(2,0)==3)
+   if( ReadPx(2,1)==1)
+   if( ReadPx(2,2)==1)
+   if( ReadPx(2,3)==1)
+   if( ReadPx(2,4)==1)
+   if( ReadPx(2,5)==1)
+   if( ReadPx(2,6)==1)
+   if( ReadPx(2,7)==6)
+   if( ReadPx(3,0)==3)
+   if( ReadPx(3,1)==3)
+   if( ReadPx(3,2)==3)
+   if( ReadPx(3,3)==3)
+   if( ReadPx(3,4)==3)
+   if( ReadPx(3,5)==4)
+   if( ReadPx(3,6)==5)
+   if( ReadPx(3,7)==6)
+   if( ReadPx(4,0)==2)
+   if( ReadPx(4,1)==8)
+   if( ReadPx(4,2)==8)
+   if( ReadPx(4,3)==8)
+   if( ReadPx(4,4)==8)
+   if( ReadPx(4,5)==4)
+   if( ReadPx(4,6)==5)
+   if( ReadPx(4,7)==6)
+   if( ReadPx(5,0)==2)
+   if( ReadPx(5,1)==8)
+   if( ReadPx(5,2)==2)
+   if( ReadPx(5,3)==4)
+   if( ReadPx(5,4)==4)
+   if( ReadPx(5,5)==4)
+   if( ReadPx(5,6)==5)
+   if( ReadPx(5,7)==6)
+   if( ReadPx(6,0)==2)
+   if( ReadPx(6,1)==8)
+   if( ReadPx(6,2)==2)
+   if( ReadPx(6,3)==4)
+   if( ReadPx(6,4)==5)
+   if( ReadPx(6,5)==5)
+   if( ReadPx(6,6)==5)
+   if( ReadPx(6,7)==6)
+   if( ReadPx(7,0)==2)
+   if( ReadPx(7,1)==2)
+   if( ReadPx(7,2)==2)
+   if( ReadPx(7,3)==4)
+   if( ReadPx(7,4)==5)
+   if( ReadPx(7,5)==6)
+   if( ReadPx(7,6)==6)
+   if( ReadPx(7,7)==6)
+   
+   Winner = true;
+     }
  
+ if(Winner==true)
+   DrawPx(0,0,1);
+   
  
  DisplaySlate();
  
