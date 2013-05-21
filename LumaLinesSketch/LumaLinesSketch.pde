@@ -2,7 +2,7 @@
 
 struct Point
 {
-int xc;
+int xc; //ints for points in array only
 int yc;
 int color;
 };
@@ -24,15 +24,15 @@ Point t14 = {7,1,7};
 Point t15 = {1,6,8};//pink
 Point t16 = {4,4,8};
 
-Point tarray[20] = {t1,t2,t3,t4,t5,t6,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16};
+Point ColorPnts[20] = {t1,t2,t3,t4,t5,t6,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16}; //the array of points you need to connect to win
 
-int xcursor;
-int ycursor;
+int xcursor;  //cursor x position
+int ycursor; //cursor y position
 int i;
-int PxColor;
-int pencilColor;
-int CursorPhase;
-unsigned long LastTime; 
+int PxColor;  //color of pixel on board
+int pencilColor;  //color of the cursor
+int CursorPhase;  //whether cursor is on a color or off (during blinking)
+unsigned long LastTime;  //blinking timing
 #define DelayTime_ms 40
 
 void setup()
@@ -41,14 +41,14 @@ void setup()
   MeggyJrSimpleSetup(); // Required code, line 2 of 2.
   
   ClearSlate();
-  xcursor=0;
-  ycursor=0;
-  PxColor=0;
-  pencilColor=1;
+  xcursor=0;  //starting x-pos= 0
+  ycursor=0;  //starting y-pos= 0
+  PxColor=0;  // pixels start off dark
+  pencilColor=1;  //cursor starts off as 1st color (red)
  
-  for (int i = 0; i < 17; i++)
+  for (int i = 0; i < 17; i++) //drawing the array if < 17 points in it
   {
-    DrawPx(tarray[i].xc,tarray[i].yc, tarray[i].color);
+    DrawPx(ColorPnts[i].xc,ColorPnts[i].yc, ColorPnts[i].color);
   }
   
   EditColor(1, 255, 0, 0); //red
@@ -112,10 +112,10 @@ void loop()
     Tone_Start(ToneE3, 50);
     PxColor = ReadPx(xcursor,ycursor);
      }
-    for(int i=0;i<17;i++)
+    for(int i=0;i<17;i++) 
       {
-        if(xcursor==tarray[i].xc && ycursor==tarray[i].yc)
-        ycursor--;
+        if(xcursor==ColorPnts[i].xc && ycursor==ColorPnts[i].yc)
+        ycursor--; 
       }
      }
     
@@ -134,7 +134,7 @@ void loop()
     } 
       for(int i=0;i<17;i++)
       {
-        if(xcursor==tarray[i].xc && ycursor==tarray[i].yc)
+        if(xcursor==ColorPnts[i].xc && ycursor==ColorPnts[i].yc)
         ycursor++;
       }
   }
@@ -154,7 +154,7 @@ void loop()
      }
        for(int i=0;i<17;i++)
       {
-        if(xcursor==tarray[i].xc && ycursor==tarray[i].yc)
+        if(xcursor==ColorPnts[i].xc && ycursor==ColorPnts[i].yc)
         xcursor--;
       }
      }
@@ -173,7 +173,7 @@ void loop()
     }
   for(int i=0;i<17;i++)
       {
-        if(xcursor==tarray[i].xc && ycursor==tarray[i].yc)
+        if(xcursor==ColorPnts[i].xc && ycursor==ColorPnts[i].yc)
         ycursor++;
       }
   }
@@ -207,70 +207,70 @@ void loop()
  
  boolean Winner = false;
      {
-   if( ReadPx(0,0)==3)
-   if( ReadPx(0,1)==3)
-   if( ReadPx(0,2)==3)
-   if( ReadPx(0,3)==3)
-   if( ReadPx(0,4)==3)
-   if( ReadPx(0,5)==7)
-   if( ReadPx(0,6)==7)
-   if( ReadPx(0,7)==7)
-   if( ReadPx(1,0)==3)
-   if( ReadPx(1,1)==1)
-   if( ReadPx(1,2)==7)
-   if( ReadPx(1,3)==7)
-   if( ReadPx(1,4)==7)
-   if( ReadPx(1,5)==7)
-   if( ReadPx(1,6)==1)
-   if( ReadPx(1,7)==7)
-   if( ReadPx(2,0)==3)
-   if( ReadPx(2,1)==1)
-   if( ReadPx(2,2)==1)
-   if( ReadPx(2,3)==1)
-   if( ReadPx(2,4)==1)
-   if( ReadPx(2,5)==1)
-   if( ReadPx(2,6)==1)
-   if( ReadPx(2,7)==6)
-   if( ReadPx(3,0)==3)
-   if( ReadPx(3,1)==3)
-   if( ReadPx(3,2)==3)
-   if( ReadPx(3,3)==3)
-   if( ReadPx(3,4)==3)
-   if( ReadPx(3,5)==4)
-   if( ReadPx(3,6)==5)
-   if( ReadPx(3,7)==6)
-   if( ReadPx(4,0)==2)
-   if( ReadPx(4,1)==8)
-   if( ReadPx(4,2)==8)
-   if( ReadPx(4,3)==8)
-   if( ReadPx(4,4)==8)
-   if( ReadPx(4,5)==4)
-   if( ReadPx(4,6)==5)
-   if( ReadPx(4,7)==6)
-   if( ReadPx(5,0)==2)
-   if( ReadPx(5,1)==8)
-   if( ReadPx(5,2)==2)
-   if( ReadPx(5,3)==4)
-   if( ReadPx(5,4)==4)
-   if( ReadPx(5,5)==4)
-   if( ReadPx(5,6)==5)
-   if( ReadPx(5,7)==6)
-   if( ReadPx(6,0)==2)
-   if( ReadPx(6,1)==8)
-   if( ReadPx(6,2)==2)
-   if( ReadPx(6,3)==4)
-   if( ReadPx(6,4)==5)
-   if( ReadPx(6,5)==5)
-   if( ReadPx(6,6)==5)
-   if( ReadPx(6,7)==6)
-   if( ReadPx(7,0)==2)
-   if( ReadPx(7,1)==2)
-   if( ReadPx(7,2)==2)
-   if( ReadPx(7,3)==4)
-   if( ReadPx(7,4)==5)
-   if( ReadPx(7,5)==6)
-   if( ReadPx(7,6)==6)
-   if( ReadPx(7,7)==6)
+   if( ReadPx(0,0)==3 && 
+    ReadPx(0,1)==3 &&
+    ReadPx(0,2)==3 &&
+    ReadPx(0,3)==3 &&
+    ReadPx(0,4)==3 &&
+    ReadPx(0,5)==7 &&
+    ReadPx(0,6)==7 &&
+    ReadPx(0,7)==7 &&
+    ReadPx(1,0)==3 &&
+    ReadPx(1,1)==1 &&
+    ReadPx(1,2)==7 &&
+    ReadPx(1,3)==7 &&
+    ReadPx(1,4)==7 &&
+    ReadPx(1,5)==7 &&
+    ReadPx(1,6)==1 &&
+    ReadPx(1,7)==7 &&
+    ReadPx(2,0)==3 &&
+    ReadPx(2,1)==1 &&
+    ReadPx(2,2)==1 &&
+    ReadPx(2,3)==1 &&
+    ReadPx(2,4)==1 &&
+    ReadPx(2,5)==1 &&
+    ReadPx(2,6)==1 &&
+    ReadPx(2,7)==6 &&
+    ReadPx(3,0)==3 &&
+    ReadPx(3,1)==3 &&
+    ReadPx(3,2)==3 &&
+    ReadPx(3,3)==3 &&
+    ReadPx(3,4)==3 &&
+    ReadPx(3,5)==4 &&
+    ReadPx(3,6)==5 &&
+    ReadPx(3,7)==6 &&
+    ReadPx(4,0)==2 &&
+    ReadPx(4,1)==8 &&
+    ReadPx(4,2)==8 &&
+    ReadPx(4,3)==8 &&
+    ReadPx(4,4)==8 &&
+    ReadPx(4,5)==4 &&
+    ReadPx(4,6)==5 &&
+    ReadPx(4,7)==6 &&
+    ReadPx(5,0)==2 &&
+    ReadPx(5,1)==8 &&
+    ReadPx(5,2)==2 &&
+    ReadPx(5,3)==4 &&
+    ReadPx(5,4)==4 &&
+    ReadPx(5,5)==4 &&
+    ReadPx(5,6)==5 &&
+    ReadPx(5,7)==6 &&
+    ReadPx(6,0)==2 &&
+    ReadPx(6,1)==8 &&
+    ReadPx(6,2)==2 &&
+    ReadPx(6,3)==4 &&
+    ReadPx(6,4)==5 &&
+    ReadPx(6,5)==5 &&
+    ReadPx(6,6)==5 &&
+    ReadPx(6,7)==6 &&
+    ReadPx(7,0)==2 &&
+    ReadPx(7,1)==2 &&
+    ReadPx(7,2)==2 &&
+    ReadPx(7,3)==4 &&
+    ReadPx(7,4)==5 &&
+    ReadPx(7,5)==6 &&
+    ReadPx(7,6)==6 &&
+    ReadPx(7,7)==6)
    
    Winner = true;
      }
