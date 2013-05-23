@@ -78,9 +78,9 @@ void loop()
     {    
     pencilColor++;      //increasing pencil color to +1 whatever it is now
     if (pencilColor > (8 + 1))  //if pencil is > (8+1) have pencil go dark
-      pencilColor = Dark;       
+      pencilColor = Dark;  //then cursor is not lit     
       
-   Tone_Start(ToneD3, 50);     
+   Tone_Start(ToneD3, 50);   //playing sound when pressed  
   }
     
    if (Button_B)   
@@ -96,12 +96,12 @@ void loop()
        PxColor = Dark;   //otherwise have the pixel go dark
       }      
 
-  Tone_Start(ToneC3, 50);
+  Tone_Start(ToneC3, 50); //playing sounf when pressed
 
 
   }
      
-     if(Button_Up)
+     if(Button_Up) //moving cursor up
      {
        {
        DrawPx(xcursor,ycursor,PxColor);  //Drawing the cursor
@@ -109,22 +109,22 @@ void loop()
     if(ycursor==8) //looping
     ycursor=0;
     
-    Tone_Start(ToneE3, 50);
-    PxColor = ReadPx(xcursor,ycursor);
+    Tone_Start(ToneE3, 50); //playing tone when moving
+    PxColor = ReadPx(xcursor,ycursor); //allowing the pixel to stay on the board
      }
-    for(int i=0;i<17;i++) 
+    for(int i=0;i<17;i++)  //if array is < 17 points
       {
-        if(xcursor==ColorPnts[i].xc && ycursor==ColorPnts[i].yc)
-        ycursor--; 
+        if(xcursor==ColorPnts[i].xc && ycursor==ColorPnts[i].yc) //and x or y cursor is same position as the ColorPnts array
+        ycursor--; //substracts -1 y value from whatever cursor is currently.
       }
      }
     
-  if(Button_Down)
+  if(Button_Down) //moving the cursor down
   {
     {
     DrawPx(xcursor,ycursor,PxColor);
     
-    if(ycursor==0)
+    if(ycursor==0) //looping
       ycursor=7;
     else
       ycursor=ycursor-1;
@@ -135,11 +135,11 @@ void loop()
       for(int i=0;i<17;i++)
       {
         if(xcursor==ColorPnts[i].xc && ycursor==ColorPnts[i].yc)
-        ycursor++;
+        ycursor++; //if cursor position is the same as the array then add 1 to whatever y is currently
       }
   }
       
-    if(Button_Left)
+    if(Button_Left) //moving cursor left
     {
     {
      DrawPx(xcursor,ycursor,PxColor);
@@ -155,7 +155,7 @@ void loop()
        for(int i=0;i<17;i++)
       {
         if(xcursor==ColorPnts[i].xc && ycursor==ColorPnts[i].yc)
-        xcursor--;
+        xcursor++; //if cursor position is the same as the array then add 1 to whatever x is currently
       }
      }
   
@@ -174,111 +174,111 @@ void loop()
   for(int i=0;i<17;i++)
       {
         if(xcursor==ColorPnts[i].xc && ycursor==ColorPnts[i].yc)
-        ycursor++;
+        xcursor--; //if cursor position is the same as the array then subtract from whatever x is currently
       }
   }
  
  
-  if (PxColor == pencilColor)
+  if (PxColor == pencilColor) //if the color on the meggy is the same as the pencil then the cursor goes dark
     CursorColor = Dark;
   else   
     CursorColor = pencilColor;
 
-  if (pencilColor > 8)     
+  if (pencilColor > 8)     //if the pencil color is >8 then have it = the pc color
     CursorColor = PxColor;
 
-  if (pencilColor == Dark)      
-    CursorColor = FullOn;
+  if (pencilColor == Dark)   //if cursor is not on (dark) then make the cursor bright   
+    CursorColor = FullOn; 
     
-  if ((millis() - LastTime) > DelayTime_ms)    
+  if ((millis() - LastTime) > DelayTime_ms) //timing of the dot and making sure if it is on or not   
   {
 
-    CursorPhase++;
+    CursorPhase++;  //have the cursor flash if the phase is more then 2
     if (CursorPhase > 2)
     {
-      DrawPx(xcursor,ycursor,CursorColor);
+      DrawPx(xcursor,ycursor,CursorColor); //restarting the cursor phase back to 0 so it loops
       CursorPhase = 0;
     }
     else
-      DrawPx(xcursor,ycursor,PxColor);
+      DrawPx(xcursor,ycursor,PxColor); //otherwise just draw the pixel
       
-    LastTime = millis();
+    LastTime = millis();// timing for flashing since the cursor and board is not clearing
   }
- 
- boolean Winner = false;
-     {
-   if( ReadPx(0,0)==3 && 
-    ReadPx(0,1)==3 &&
-    ReadPx(0,2)==3 &&
-    ReadPx(0,3)==3 &&
-    ReadPx(0,4)==3 &&
-    ReadPx(0,5)==7 &&
-    ReadPx(0,6)==7 &&
-    ReadPx(0,7)==7 &&
-    ReadPx(1,0)==3 &&
-    ReadPx(1,1)==1 &&
-    ReadPx(1,2)==7 &&
-    ReadPx(1,3)==7 &&
-    ReadPx(1,4)==7 &&
-    ReadPx(1,5)==7 &&
-    ReadPx(1,6)==1 &&
-    ReadPx(1,7)==7 &&
-    ReadPx(2,0)==3 &&
-    ReadPx(2,1)==1 &&
-    ReadPx(2,2)==1 &&
-    ReadPx(2,3)==1 &&
-    ReadPx(2,4)==1 &&
-    ReadPx(2,5)==1 &&
-    ReadPx(2,6)==1 &&
-    ReadPx(2,7)==6 &&
-    ReadPx(3,0)==3 &&
-    ReadPx(3,1)==3 &&
-    ReadPx(3,2)==3 &&
-    ReadPx(3,3)==3 &&
-    ReadPx(3,4)==3 &&
-    ReadPx(3,5)==4 &&
-    ReadPx(3,6)==5 &&
-    ReadPx(3,7)==6 &&
-    ReadPx(4,0)==2 &&
-    ReadPx(4,1)==8 &&
-    ReadPx(4,2)==8 &&
-    ReadPx(4,3)==8 &&
-    ReadPx(4,4)==8 &&
-    ReadPx(4,5)==4 &&
-    ReadPx(4,6)==5 &&
-    ReadPx(4,7)==6 &&
-    ReadPx(5,0)==2 &&
-    ReadPx(5,1)==8 &&
-    ReadPx(5,2)==2 &&
-    ReadPx(5,3)==4 &&
-    ReadPx(5,4)==4 &&
-    ReadPx(5,5)==4 &&
-    ReadPx(5,6)==5 &&
-    ReadPx(5,7)==6 &&
-    ReadPx(6,0)==2 &&
-    ReadPx(6,1)==8 &&
-    ReadPx(6,2)==2 &&
-    ReadPx(6,3)==4 &&
-    ReadPx(6,4)==5 &&
-    ReadPx(6,5)==5 &&
-    ReadPx(6,6)==5 &&
-    ReadPx(6,7)==6 &&
-    ReadPx(7,0)==2 &&
-    ReadPx(7,1)==2 &&
-    ReadPx(7,2)==2 &&
-    ReadPx(7,3)==4 &&
-    ReadPx(7,4)==5 &&
-    ReadPx(7,5)==6 &&
-    ReadPx(7,6)==6 &&
-    ReadPx(7,7)==6)
+  boolean Winner= false; //boolean starts off false
+     
+   if(ReadPx(0,0)==3 &&  //if the pixels on the board are the same as the ones that have all the lines connected then it wins the game
+   ReadPx(0,1)==3)
+   //ReadPx(0,2)==3 &&
+   //ReadPx(0,3)==3 &&
+   //ReadPx(0,4)==2 &&
+   //ReadPx(0,5)==2 &&
+   //ReadPx(0,6)==2 &&
+   //ReadPx(0,7)==2 &&
+   //ReadPx(1,0)==3 &&
+   //ReadPx(1,1)==1 &&
+   //ReadPx(1,2)==1 &&
+   //ReadPx(1,3)==3 &&
+   //ReadPx(1,4)==8 &&
+   //ReadPx(1,5)==8 &&
+   //ReadPx(1,6)==8 &&
+   //ReadPx(1,7)==2 &&
+   //ReadPx(2,0)==3 &&
+   //ReadPx(2,1)==7 &&
+   //ReadPx(2,2)==1 &&
+   //ReadPx(2,3)==3 &&
+   //ReadPx(2,4)==8 &&
+   //ReadPx(2,5)==2 &&
+   //ReadPx(2,6)==2 &&
+   //ReadPx(2,7)==2 &&
+   //ReadPx(3,0)==3 &&
+   //ReadPx(3,1)==8 &&
+   //ReadPx(3,2)==1 &&
+   //ReadPx(3,3)==3 &&
+   //ReadPx(3,4)==8 &&
+   //ReadPx(3,5)==4 &&
+   //ReadPx(3,6)==4 &&
+   //ReadPx(3,7)==4 &&
+   //ReadPx(4,0)==3 &&
+   //ReadPx(4,1)==7 &&
+   //ReadPx(4,2)==1 &&
+   //ReadPx(4,3)==3 &&
+   //ReadPx(4,4)==8 &&
+   //ReadPx(4,5)==4 &&
+   //ReadPx(4,6)==5 &&
+   //ReadPx(4,7)==5 &&
+   //ReadPx(5,0)==7 &&
+   //ReadPx(5,1)==7 &&
+   //ReadPx(5,2)==1 &&
+   //ReadPx(5,3)==4 &&
+   //ReadPx(5,4)==4 &&
+   //ReadPx(5,5)==4 &&
+   //ReadPx(5,6)==5 &&
+   //ReadPx(5,7)==6 &&
+   //ReadPx(6,0)==7 &&
+   //ReadPx(6,1)==1 &&
+   //ReadPx(6,2)==5 &&
+   //ReadPx(6,3)==5 &&
+   //ReadPx(6,4)==5 &&
+   //ReadPx(6,5)==5 &&
+   //ReadPx(6,6)==5 &&
+   //ReadPx(6,7)==6 &&
+   //ReadPx(7,0)==7 &&
+   //ReadPx(7,1)==7 &&
+   //ReadPx(7,2)==6 &&
+   //ReadPx(7,3)==6 &&
+   //ReadPx(7,4)==6 &&
+   //ReadPx(7,5)==6 &&
+   //ReadPx(7,6)==6 &&
+   //ReadPx(7,7)==6
    
-   Winner = true;
-     }
- 
- if(Winner==true)
-   DrawPx(0,0,1);
+   Winner=true; //if all these pixels are correct the boolean is true
    
- 
- DisplaySlate();
- 
+   if(Winner==true) //if the boolean is true then have an auxilary light go on and a tone play
+   {
+   SetAuxLEDs(1);
+   Tone_Start(A3,50)
+   }
+      
+  
+ DisplaySlate(); //display
   }
